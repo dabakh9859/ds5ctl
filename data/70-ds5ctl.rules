@@ -1,0 +1,4 @@
+# DS5 Control : accès utilisateur (session active) aux capteurs de la DualSense
+# et à /dev/uinput pour créer le volant / la manette virtuelle.
+SUBSYSTEM=="input", KERNEL=="event*", ATTRS{name}=="*DualSense*", TAG+="uaccess"
+KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput"

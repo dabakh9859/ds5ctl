@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ds5ctl"
+dynamic = ["version"]
+description = "Gyroscope de la DualSense vers volant (Logitech G29) ou manette Xbox virtuelle sous Linux"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+# PyGObject (GTK 4 + libadwaita) vient des paquets de la distribution, voir install.sh
+dependencies = ["evdev>=1.4"]
+
+[project.scripts]
+ds5ctl = "ds5ctl.__main__:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "ds5ctl.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["ds5ctl*"]

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=DS5 Control
+GenericName=Volant gyroscopique DualSense
+Comment=Utilise le gyroscope de la DualSense comme volant ou manette virtuelle
+Exec=ds5ctl
+Icon=io.github.ds5ctl
+Terminal=false
+Categories=Game;
+Keywords=DualSense;PS5;gyro;volant;wheel;controller;manette;DS4Windows;
+StartupWMClass=io.github.ds5ctl
