@@ -14,6 +14,7 @@ DS5 Control lit la DualSense et crée un périphérique virtuel que les jeux voi
 - Marche quelle que soit la tenue (à plat, inclinée ou verticale) : l'axe du volant est détecté au recentrage.
 - Fusion gyroscope + accéléromètre : réactif, sans dérive.
 - Zone morte, courbe de réponse, lissage et inversion.
+- Accélérateur (R2) et frein (L2) réglables : zone morte, course utile et courbe.
 - Le stick gauche peut s'ajouter au gyro.
 - Profils (ex. un par jeu).
 - **PS** : recentrer. **PS maintenu** : activer ou désactiver le gyro.

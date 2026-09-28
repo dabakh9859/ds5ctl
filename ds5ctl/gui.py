@@ -186,6 +186,32 @@ class Window(Adw.ApplicationWindow):
         g.add(self.mix_row)
         page.add(g)
 
+        # --- pédales ---
+        self.pedal_widgets = {}
+        for name, title, trigger in (("throttle", "Accélérateur", "R2"), ("brake", "Frein", "L2")):
+            g = Adw.PreferencesGroup(title=f"{title} ({trigger})")
+            bar = Gtk.LevelBar(min_value=0, max_value=1, margin_top=4, margin_bottom=8)
+            bar.add_offset_value("low", 0.0)
+            bar.add_offset_value("high", 0.0)
+            bar.add_offset_value("full", 1.0)
+            g.add(bar)
+            row = Adw.ActionRow(title="Zone morte", subtitle="Début de course ignoré")
+            dz = self._scale(0, 50, 1, 0, lambda v, n=name: self._set(n + "_deadzone", v / 100))
+            dz.set_format_value_func(lambda _s, v: f"{v:.0f} %")
+            row.add_suffix(dz)
+            g.add(row)
+            row = Adw.ActionRow(title="Course utile", subtitle="100 % atteint quand la gâchette est à…")
+            mx = self._scale(30, 100, 1, 0, lambda v, n=name: self._set(n + "_max", v / 100))
+            mx.set_format_value_func(lambda _s, v: f"{v:.0f} %")
+            row.add_suffix(mx)
+            g.add(row)
+            row = Adw.ActionRow(title="Courbe", subtitle="1 = linéaire · plus haut = plus progressif au début")
+            cv = self._scale(0.3, 3.0, 0.1, 1, lambda v, n=name: self._set(n + "_curve", round(v, 2)))
+            row.add_suffix(cv)
+            g.add(row)
+            self.pedal_widgets[name] = (bar, dz, mx, cv)
+            page.add(g)
+
         # --- options ---
         g = Adw.PreferencesGroup(title="Options")
         self.hide_row = Adw.SwitchRow(title="Masquer la vraie DualSense aux jeux",
@@ -258,6 +284,10 @@ class Window(Adw.ApplicationWindow):
         self.smooth_scale.set_value(p["smoothing"] * 100)
         self.invert_row.set_active(p["invert"])
         self.mix_row.set_active(p["mix_stick"])
+        for name, (_bar, dz, mx, cv) in self.pedal_widgets.items():
+            dz.set_value(p[name + "_deadzone"] * 100)
+            mx.set_value(p[name + "_max"] * 100)
+            cv.set_value(p[name + "_curve"])
         self.hide_row.set_active(self.cfg["hide_physical"])
         self.device_row.set_selected([d[0] for d in DEVICES].index(self.cfg["device"]))
         self.ps_row.set_active(self.cfg["ps_recenters"])
@@ -329,6 +359,8 @@ class Window(Adw.ApplicationWindow):
             bat = f" · batterie {level} %" + (" (en charge)" if status == "Charging" else "") if level is not None else ""
             self.status_row.set_subtitle("Connectée" + bat)
             self.view.update(eng.angle, eng.output)
+            self.pedal_widgets["throttle"][0].set_value(eng.throttle)
+            self.pedal_widgets["brake"][0].set_value(eng.brake)
         elif eng:
             self.status_row.set_subtitle("Non détectée — branche ou appaire la manette")
         else:

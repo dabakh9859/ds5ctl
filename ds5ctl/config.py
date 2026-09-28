@@ -13,6 +13,13 @@ DEFAULT_PROFILE = {
     "smoothing": 0.3,        # 0 = aucun lissage
     "invert": False,
     "mix_stick": True,       # additionne le stick gauche physique au gyro
+    # gâchettes : zone morte (début de course), course utile (100 % atteint à X %), courbe
+    "throttle_deadzone": 0.03,
+    "throttle_max": 1.0,
+    "throttle_curve": 1.0,
+    "brake_deadzone": 0.03,
+    "brake_max": 1.0,
+    "brake_curve": 1.0,
 }
 
 DEFAULT_CONFIG = {

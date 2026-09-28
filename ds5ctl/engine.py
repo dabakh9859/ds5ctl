@@ -246,6 +246,8 @@ class Engine(threading.Thread):
         self.error = None
         self.angle = 0.0      # inclinaison par rapport au centre (°)
         self.output = 0.0     # direction envoyée au jeu, -1..1
+        self.throttle = 0.0   # accélérateur envoyé (R2), 0..1
+        self.brake = 0.0      # frein envoyé (L2), 0..1
         self.out = None
 
     # --- réglages ---------------------------------------------------------
@@ -399,9 +401,26 @@ class Engine(threading.Thread):
                             stick_x = ev.value
                             self._emit_steer(smoothed if p["gyro_enabled"] else 0.0, stick_x, p)
                         else:
-                            self.out.axis(ev.code, ev.value)
+                            if ev.code == e.ABS_RZ:
+                                self.throttle = self._pedal(ev.value, p, "throttle")
+                                self.out.axis(ev.code, int(round(self.throttle * 255)))
+                            elif ev.code == e.ABS_Z:
+                                self.brake = self._pedal(ev.value, p, "brake")
+                                self.out.axis(ev.code, int(round(self.brake * 255)))
+                            else:
+                                self.out.axis(ev.code, ev.value)
                     elif ev.type == e.EV_SYN:
                         self.out.syn()
+
+    @staticmethod
+    def _pedal(raw, p, name):
+        t = raw / 255.0
+        dz = p[name + "_deadzone"]
+        top = max(p[name + "_max"], dz + 0.05)
+        if t <= dz:
+            return 0.0
+        t = min((t - dz) / (top - dz), 1.0)
+        return t ** max(p[name + "_curve"], 0.1)
 
     @staticmethod
     def _shape(angle, p):
