@@ -10,7 +10,9 @@ from . import APP_ID, config  # noqa: E402
 from .config import DEFAULT_PROFILE  # noqa: E402
 from .engine import Engine, battery_level  # noqa: E402
 
-DEVICES = (("wheel", "Volant Logitech G29 (BeamNG, jeux de course)"), ("xbox", "Manette Xbox 360"))
+DEVICES = (("wheel", "Volant G29 + boutons manette (BeamNG)"),
+           ("wheel_only", "Volant Logitech G29 seul"),
+           ("xbox", "Manette Xbox 360"))
 PRESETS = (90, 180, 270, 360, 540, 720, 900, 1080)
 
 

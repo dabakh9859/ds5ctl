@@ -136,7 +136,40 @@ class WheelOutput:
         self.ui.close()
 
 
-OUTPUTS = {"wheel": WheelOutput, "xbox": XboxOutput}
+class WheelPadOutput:
+    """Volant G29 pour la direction et les pédales + manette Xbox pour tout le reste :
+    le jeu garde ses commandes manette habituelles (boutons, caméra, croix directionnelle)."""
+
+    def __init__(self):
+        self.wheel = WheelOutput()
+        self.pad = XboxOutput()
+
+    def button(self, code, value):
+        self.pad.button(code, value)
+
+    def axis(self, code, value):
+        if code in (e.ABS_Z, e.ABS_RZ):      # gâchettes -> pédales du volant
+            self.wheel.axis(code, value)
+        else:                                # stick gauche Y, stick droit, croix
+            self.pad.axis(code, value)
+
+    def steer(self, x):
+        self.wheel.steer(x)
+
+    def reset(self):
+        self.wheel.reset()
+        self.pad.reset()
+
+    def syn(self):
+        self.wheel.syn()
+        self.pad.syn()
+
+    def close(self):
+        self.wheel.close()
+        self.pad.close()
+
+
+OUTPUTS = {"wheel": WheelPadOutput, "wheel_only": WheelOutput, "xbox": XboxOutput}
 
 
 def _wrap(a):

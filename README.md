@@ -4,7 +4,8 @@ Utilise le **gyroscope de la manette PS5 (DualSense)** comme **volant** sous Lin
 
 DS5 Control lit la DualSense et crée un périphérique virtuel que les jeux voient comme une vraie manette :
 
-- **Volant Logitech G29** (par défaut) : reconnu nativement par BeamNG.drive et la plupart des jeux de course. Direction, pédales et palettes sont séparées, sans l'assistance « manette » qui bride la direction.
+- **Volant G29 + boutons manette** (par défaut) : un volant Logitech G29 (reconnu nativement par BeamNG.drive et la plupart des jeux de course) reçoit la direction et les pédales, sans l'assistance « manette » qui bride la direction. Une manette Xbox virtuelle reçoit les boutons, le stick droit et la croix directionnelle, donc le jeu garde ses commandes manette habituelles.
+- **Volant G29 seul** : tous les boutons passent par le volant, avec le profil G29 du jeu.
 - **Manette Xbox 360** : pour tous les autres jeux. L'inclinaison pilote alors le stick gauche.
 
 ## Fonctionnalités
@@ -20,7 +21,9 @@ DS5 Control lit la DualSense et crée un périphérique virtuel que les jeux voi
 - Affiche la batterie de la manette.
 - USB et Bluetooth, DualSense et DualSense Edge.
 
-### Correspondance en mode volant (profil G29 de BeamNG)
+### Correspondance en mode « Volant G29 seul » (profil G29 de BeamNG)
+
+En mode « Volant G29 + boutons manette », seuls l'inclinaison et R2/L2 vont au volant ; tous les autres boutons gardent les commandes manette du jeu.
 
 | DualSense | Volant G29 |
 |---|---|

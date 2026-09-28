@@ -21,7 +21,7 @@ DEFAULT_CONFIG = {
         "Par défaut": dict(DEFAULT_PROFILE),
         "BeamNG": dict(DEFAULT_PROFILE),
     },
-    "device": "wheel",       # "wheel" : volant Logitech G29 ; "xbox" : manette Xbox 360
+    "device": "wheel",       # "wheel" : volant G29 + manette Xbox ; "wheel_only" : G29 seul ; "xbox" : manette Xbox
     "hide_physical": True,   # masque la vraie DualSense aux jeux (EVIOCGRAB)
     "ps_recenters": True,    # le bouton PS recentre le volant au lieu d'être transmis
 }
