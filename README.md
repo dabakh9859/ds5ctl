@@ -38,7 +38,7 @@ DS5 Control lit la DualSense et crée un périphérique virtuel que les jeux voi
 ## Installation
 
 ```sh
-git clone <url-du-dépôt> ds5ctl
+git clone https://github.com/dabakh9859/ds5ctl.git
 cd ds5ctl
 ./install.sh
 ```
